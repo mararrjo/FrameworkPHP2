@@ -1,7 +1,7 @@
 <ul>
     <li>Id: <?php echo $articulo->getId() ?></li>
     <li>Nombre: <?php echo $articulo->getNombre() ?></li>
-    <li>Categoria: <?php echo $articulo->getCategoria_id()?></li>
+    <li>Categoria: <?php echo $articulo->getCategoria()?></li>
     <li>Precio: <?php echo $articulo->getPrecio() ?></li>
     <li>Cantidad: <?php echo $articulo->getCantidad() ?></li>
 </ul>

@@ -14,8 +14,9 @@ class BD implements InterfazBD {
 
     public function conectar() {
         self::$conexion = mysqli_connect(\app\Configuracion::$server, \app\Configuracion::$user, \app\Configuracion::$password, \app\Configuracion::$dataBase);
-        if(!self::$conexion){
-            URL::generarError("Error en la conexión");
+        if (!self::$conexion) {
+            URL::generarError("Error en la conexion");
+            throw new Exception("Error conexon");
         }
         return self::$conexion;
     }
@@ -28,23 +29,24 @@ class BD implements InterfazBD {
         $this->conectar();
         $resultado = mysqli_query(self::$conexion, $query);
         $this->desconectar(self::$conexion);
-        
-        if(!$resultado){
-            URL::generarError("No se ha obtenido ningun resultado");
-        }
-        
-        if(!$this->tipo){
+
+//        if (!$resultado) {
+//            URL::generarError("No se ha obtenido ningun resultado.");
+//            throw new Exception("Sin resultado");
+//        }
+
+        if (!$this->tipo) {
             return $resultado;
         }
-        
-        if($this->tipo=="SELECT"){
+
+        if ($this->tipo == "SELECT") {
             return $this->resultadoToArray($resultado);
         }
     }
-    
-    private function resultadoToArray($result){
+
+    private function resultadoToArray($result) {
         $lista = array();
-        foreach($result as $fila){
+        foreach ($result as $fila) {
             $lista[$fila["id"]] = $fila;
         }
         return $lista;
@@ -62,7 +64,7 @@ class BD implements InterfazBD {
         return $lista;
     }
 
-    public function findById($id){
+    public function findById($id) {
         $tabla = get_class($this);
         $tabla = str_getcsv($tabla, "\\")[2];
         $query = "SELECT * FROM $tabla WHERE id=$id";
@@ -73,7 +75,7 @@ class BD implements InterfazBD {
         }
         return array_pop($lista);
     }
-    
+
     public function select($query = null) {
         $this->tipo = "SELECT";
         $tabla = get_class($this);
@@ -113,7 +115,7 @@ class BD implements InterfazBD {
         $this->orden = $orden;
         return $this;
     }
-    
+
     public function groupBy($grupo) {
         $this->grupo = $grupo;
         return $this;
