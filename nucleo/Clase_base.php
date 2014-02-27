@@ -82,25 +82,25 @@ class Clase_base extends \nucleo\BD {
     public function guardarDatosDeArray($datos) {
         //Recorro todo el array para ir objeniendo la columna y su valor
         foreach ($datos as $campo => $valor) {
+ 
             //Pongo en mayusculas la primera letra del nombre de la columna.
             $campo = strtoupper(substr($campo, 0, 1)) . substr($campo, 1);
-
             //Obtengo el nombre del metodo
             $metodo = "get" . $campo;
 //            $es_array = $this->$metodo();
             //Comprueba si hay alguna clave ajena mirando si un campo contiene
             // _id o id_
-            if (stristr($campo, "_id") or stristr($campo, "id_")) {
-                $tabla = strtolower(str_replace("_id", "", $campo));
-                $clase = "\\app\\modelos\\" . $tabla;
-                $objeto = new $clase();
-                $metodoTabla = strtoupper(substr($tabla, 0, 1)) . substr($tabla, 1);
-                $metodoTabla = "set" . $metodoTabla;
-                if (method_exists($this, $metodoTabla)) {
-                    $objeto->findById($valor);
-                    $this->$metodoTabla($objeto);
-                }
-            }
+//            if (stristr($campo, "_id") or stristr($campo, "id_")) {
+//                $tabla = strtolower(str_replace("_id", "", $campo));
+//                $clase = "\\app\\modelos\\" . $tabla;
+//                $objeto = new $clase();
+//                $metodoTabla = strtoupper(substr($tabla, 0, 1)) . substr($tabla, 1);
+//                $metodoTabla = "set" . $metodoTabla;
+//                if (method_exists($this, $metodoTabla)) {
+//                    $objeto->findById($valor);
+//                    $this->$metodoTabla($objeto);
+//                }
+//            }
 
 //            if (is_array($es_array) and !is_array($valor)) {
 //                $valor = unserialize($valor);
@@ -143,15 +143,16 @@ class Clase_base extends \nucleo\BD {
 
     public function ejecutar() {
         $lista = parent::ejecutar();
-        if (count($lista) == 1) {
-            return $this->guardarDatosDeArray(array_pop($lista));
-        } else {
-            $objetos = array();
-            foreach ($lista as $fila) {
-                $objetos[$fila["id"]] = $this->guardarDatosDeArray($fila);
-            }
-            return $objetos;
-        }
+
+//        if (count($lista) == 1) {
+//            return $this->guardarDatosDeArray(array_pop($lista));
+//        } else {
+//            $objetos = array();
+//            foreach ($lista as $fila) {
+//                $objetos[$fila["id"]] = $this->guardarDatosDeArray($fila);
+//            }
+//            return $objetos;
+//        }
     }
 
     public function findAll($clausulas = null) {

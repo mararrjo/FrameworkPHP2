@@ -6,11 +6,14 @@ class BD implements InterfazBD {
 
     private static $conexion = null;
     private $tipo;
+    private $columnas;
     private $from;
     private $alias;
     private $where;
     private $orden;
     private $grupo;
+    private $tablaJoin;
+    private $on;
 
     public function conectar() {
         self::$conexion = mysqli_connect(\app\Configuracion::$server, \app\Configuracion::$user, \app\Configuracion::$password, \app\Configuracion::$dataBase);
@@ -26,6 +29,7 @@ class BD implements InterfazBD {
     }
 
     public function query($query) {
+        echo $query . "<br>";
         $this->conectar();
         $resultado = mysqli_query(self::$conexion, $query);
         $this->desconectar(self::$conexion);
@@ -40,15 +44,48 @@ class BD implements InterfazBD {
         }
 
         if ($this->tipo == "SELECT") {
-            return $this->resultadoToArray($resultado);
+            return $this->procesarResultado($resultado);
         }
     }
 
-    private function resultadoToArray($result) {
+    private function procesarResultado($result) {
+        
+        //Obtengo la lista de columnas
         $lista = array();
-        foreach ($result as $fila) {
-            $lista[$fila["id"]] = $fila;
+        while ($fila = mysqli_fetch_field($result)) {
+            $lista[$fila->orgtable][$fila->name] = "";
         }
+
+        //Obtengo un array con todas las filas , tablas y columnas con sus valores
+        $filas = 0;
+        $listaProcesada = array();
+        while ($fila = mysqli_fetch_array($result)) {
+            $cont = 0;
+            foreach ($lista as $nombreTabla => $tabla) {
+
+                foreach ($tabla as $nombreColumna => $columna) {
+                    $listaProcesada[$filas][$nombreTabla][$nombreColumna] = $fila[$cont];
+                    $cont++;
+                }
+            }
+            $filas++;
+        }
+        
+        //Transformo el array de datos en un array de objetos.
+        $filas = 0;
+        $listaObjetos = array();
+        foreach ($listaProcesada as $fila) {
+            foreach ($fila as $nombreTabla => $tabla) {
+                $tableNamespace = "\\app\\modelos\\" . $nombreTabla;
+                if (class_exists($tableNamespace, false)) {
+                    $obj = new $tableNamespace();
+                    $obj->guardarDatosDeArray($tabla);
+                    $listaObjetos[$filas][$nombreTabla] = $obj;
+                }
+            }
+            $filas++;
+        }
+        
         return $lista;
     }
 
@@ -76,10 +113,11 @@ class BD implements InterfazBD {
         return array_pop($lista);
     }
 
-    public function select($query = null) {
+    public function select($columnas = null) {
         $this->tipo = "SELECT";
         $tabla = get_class($this);
         $tabla = str_getcsv($tabla, "\\")[2];
+        $this->columnas = $columnas;
         $this->from = $tabla;
         return $this;
     }
@@ -123,12 +161,21 @@ class BD implements InterfazBD {
 
     public function ejecutar() {
         if ($this->tipo == "SELECT") {
-            $query = "$this->tipo * FROM $this->from $this->alias";
+            $query = $this->tipo . " ";
+            $this->columnas ? $query .= "$this->columnas " : $query .= " * ";
+            $query .= "FROM $this->from $this->alias";
+            $this->tablaJoin ? $query .= " LEFT JOIN $this->tablaJoin ON $this->on" : null;
             $this->where ? $query .= " WHERE $this->where" : null;
             $this->orden ? $query .= " ORDER BY $this->orden" : null;
             $this->grupo ? $query .= " GROUP BY $this->grupo" : null;
             return $this->query($query);
         }
+    }
+
+    public function join($tablaJoin, $on) {
+        $this->tablaJoin = $tablaJoin;
+        $this->on = $on;
+        return $this;
     }
 
 }

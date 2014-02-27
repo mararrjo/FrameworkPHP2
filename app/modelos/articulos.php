@@ -71,8 +71,14 @@ class articulos extends \nucleo\Clase_base {
         return $this->nombre;
     }
     
-//    public function findById($id) {
-//        $resultado = $this->select();
+//    public function obtenerArticulos(){
+//        $articulos = $this->select("*")
+//                ->from("articulos a")
+//                ->join("categoria c", "c.id = a.categoria_id")
+//                ->orderBy("a.nombre")
+//                ->ejecutar();
+//        
+//        return $articulos;
 //    }
     
 }

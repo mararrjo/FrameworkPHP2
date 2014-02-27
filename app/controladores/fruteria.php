@@ -10,12 +10,16 @@ class fruteria extends Controlador {
     public function listado() {
         $articulos = new \app\modelos\articulos();
         
-//        $listaArticulos = $this->getBaseDatos("articulos")->select()
-//                ->from("articulos a")
+        $listaArticulos = $this->getBaseDatos("articulos")->select()
+                ->from("articulos a")
+                ->join("categoria c", "c.id = a.categoria_id")
+//                ->where("a.id = 2")
 //                ->orderBy("a.nombre")
-//                ->ejecutar();
+                ->ejecutar();
         
-        $listaArticulos = $this->getBaseDatos("articulos")->findAll();
+//        $listaArticulos = $this->getBaseDatos("articulos")->findAll("order by nombre");
+        
+//        $listaArticulos = $articulos->obtenerArticulos();
         
         $this->renderizar(array("articulos" => $listaArticulos));
     }

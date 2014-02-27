@@ -16,7 +16,7 @@
                 <tr>
                     <td><a href="<?php echo nucleo\URL::ruta(array("fruteria", "mostrar", $articulo->getId())) ?>"><?php echo $articulo->getId(); ?></a></td>
                     <td><?php echo $articulo->getNombre(); ?></td>
-                    <td><?php echo $articulo->getCategoria_id(); ?></td>
+                    <td><?php echo $articulo->getCategoria(); ?></td>
                     <td><?php echo $articulo->getPrecio(); ?></td>
                     <td><?php echo $articulo->getCantidad(); ?></td>
                     <td><a href="<?php echo nucleo\URL::ruta(array("fruteria", "ver", $articulo->getId())) ?>"><button class="boton">Ver</button></a>
