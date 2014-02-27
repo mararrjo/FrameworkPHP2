@@ -71,14 +71,30 @@ class articulos extends \nucleo\Clase_base {
         return $this->nombre;
     }
     
-//    public function obtenerArticulos(){
-//        $articulos = $this->select("*")
-//                ->from("articulos a")
-//                ->join("categoria c", "c.id = a.categoria_id")
-//                ->orderBy("a.nombre")
-//                ->ejecutar();
-//        
-//        return $articulos;
-//    }
+    public function obtenerArticulos(){
+        $articulos = $this->select()
+                ->from("articulos a")
+                ->join("categoria c", "c.id = a.categoria_id")
+                ->orderBy("a.nombre")
+                ->ejecutar();
+        
+        for($i = 0; $i < count($articulos["articulos"]); $i++){
+            $articulos["articulos"][$i]->setCategoria($articulos["categoria"][$i]);
+        }
+        
+        return $articulos["articulos"];
+    }
+    
+    public function obtenerArticulo($id){
+        $articulo = $this->select()
+                ->from("articulos a")
+                ->join("categoria c","c.id = a.categoria_id")
+                ->where("a.id = $id")
+                ->ejecutar();
+        
+        $articulo["articulos"][0]->setCategoria($articulo["categoria"][0]);
+        
+        return $articulo["articulos"][0];
+    }
     
 }

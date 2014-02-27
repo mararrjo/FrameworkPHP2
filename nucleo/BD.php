@@ -29,15 +29,10 @@ class BD implements InterfazBD {
     }
 
     public function query($query) {
-        echo $query . "<br>";
+//        echo $query . "<br>";
         $this->conectar();
         $resultado = mysqli_query(self::$conexion, $query);
         $this->desconectar(self::$conexion);
-
-//        if (!$resultado) {
-//            URL::generarError("No se ha obtenido ningun resultado.");
-//            throw new Exception("Sin resultado");
-//        }
 
         if (!$this->tipo) {
             return $resultado;
@@ -49,7 +44,7 @@ class BD implements InterfazBD {
     }
 
     private function procesarResultado($result) {
-        
+
         //Obtengo la lista de columnas
         $lista = array();
         while ($fila = mysqli_fetch_field($result)) {
@@ -70,7 +65,7 @@ class BD implements InterfazBD {
             }
             $filas++;
         }
-        
+
         //Transformo el array de datos en un array de objetos.
         $filas = 0;
         $listaObjetos = array();
@@ -80,13 +75,18 @@ class BD implements InterfazBD {
                 if (class_exists($tableNamespace, false)) {
                     $obj = new $tableNamespace();
                     $obj->guardarDatosDeArray($tabla);
-                    $listaObjetos[$filas][$nombreTabla] = $obj;
+                    $listaObjetos[$nombreTabla][$filas] = $obj;
                 }
             }
             $filas++;
         }
-        
-        return $lista;
+
+
+        if ($this->tablaJoin) {
+            return $listaObjetos;
+        } else {
+            return array_pop($listaObjetos);
+        }
     }
 
     public function findAll($clausulas = null) {

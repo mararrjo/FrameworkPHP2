@@ -141,8 +141,8 @@ class Clase_base extends \nucleo\BD {
         $this->guardarDatosDeArray($obj->obtenerArrayCampos());
     }
 
-    public function ejecutar() {
-        $lista = parent::ejecutar();
+//    public function ejecutar() {
+//        $lista = parent::ejecutar();
 
 //        if (count($lista) == 1) {
 //            return $this->guardarDatosDeArray(array_pop($lista));
@@ -153,7 +153,7 @@ class Clase_base extends \nucleo\BD {
 //            }
 //            return $objetos;
 //        }
-    }
+//    }
 
     public function findAll($clausulas = null) {
         $lista = parent::findAll($clausulas);
