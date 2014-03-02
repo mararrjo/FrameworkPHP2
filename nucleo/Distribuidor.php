@@ -9,6 +9,8 @@ class Distribuidor {
 
     public static function mostrarVista() {
 
+        self::comprobarTiempoSesion();
+
         $controlador = "";
         $metodo = "";
 
@@ -19,17 +21,35 @@ class Distribuidor {
         }
         self::$controlador = $controlador;
 
-        require_once "app/controladores/$controlador.php";
 
         $controlador = "app\\controladores\\" . $controlador;
-        $modulo = new $controlador();
+        if (is_file($controlador . ".php")) {
+            $modulo = new $controlador();
+            if (!isset($_GET["metodo"])) {
+                $metodo = \app\Configuracion::$metodo_defecto;
+            } else {
+                $metodo = $_GET["metodo"];
+            }
 
-        if (!isset($_GET["metodo"])) {
-            $metodo = \app\Configuracion::$metodo_defecto;
+            if (method_exists($modulo, $metodo)) {
+                self::$metodo = $metodo;
+            } else {
+                $controlador = "\\app\\controladores\\errores";
+                self::$controlador = "errores";
+                Sesion::setMensaje("error", "No existe el método");
+                $modulo = new $controlador();
+                $metodo = "index";
+                self::$metodo = $metodo;
+            }
         } else {
-            $metodo = $_GET["metodo"];
+            $controlador = "\\app\\controladores\\errores";
+            self::$controlador = "errores";
+            Sesion::setMensaje("error", "No existe el controlador");
+            $modulo = new $controlador();
+            $metodo = "index";
+            self::$metodo = $metodo;
         }
-        self::$metodo = $metodo;
+
 
         if (isset($_GET["id"])) {
             $id = $_GET["id"];
@@ -50,6 +70,14 @@ class Distribuidor {
 
     public static function getMetodo() {
         return self::$metodo;
+    }
+
+    public static function comprobarTiempoSesion() {
+        if (Usuarios::sesionCaducada()) {
+            Sesion::setFlash("Sesion caducada");
+        } else {
+            Sesion::setDatos("usuario_ultima_actividad", new \DateTime());
+        }
     }
 
 }

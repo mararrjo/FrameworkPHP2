@@ -37,6 +37,35 @@ class Clase_base extends \nucleo\BD {
         }
     }
 
+    public function obtenerStringColumnas() {
+
+        $clase = get_class($this);
+        $clase = str_getcsv($clase, "\\")[2];
+        $filas = $this->query("DESC $clase");
+//        $filas = $this->desc();
+        $camposTabla = array();
+        foreach ($filas as $fila) {
+            $camposTabla[$fila["Field"]] = $fila["Field"] . " ";
+        }
+
+        $metodos = get_class_methods(get_class($this));
+        $columnas = "";
+        foreach ($metodos as $indice => $metodo) {
+            if (stristr($metodo, "get")) {
+                $propiedad = strtolower(str_replace("get", "", $metodo));
+                if (array_key_exists($propiedad, $camposTabla)) {
+                    $valor = $this->$metodo();
+                    if (!preg_match("/^\d$/i", $valor) and !preg_match("/\./i", $valor)) {
+                        $valor = "'$valor'";
+                    }
+                    $columnas .= $propiedad . "=" . $valor . ", ";
+                }
+            }
+        }
+        $columnas = substr($columnas, 0, count($columnas) - 3);
+        return $columnas;
+    }
+
     public function obtenerStringCampos() {
         //Extraigo las columnas que tiene la tabla en la base de datos
         $clase = get_class($this);
@@ -69,7 +98,7 @@ class Clase_base extends \nucleo\BD {
             }
         }
         $campos = substr($campos, 0, count($campos) - 3);
-        ;
+
         return $campos;
     }
 
@@ -82,7 +111,7 @@ class Clase_base extends \nucleo\BD {
     public function guardarDatosDeArray($datos) {
         //Recorro todo el array para ir objeniendo la columna y su valor
         foreach ($datos as $campo => $valor) {
- 
+
             //Pongo en mayusculas la primera letra del nombre de la columna.
             $campo = strtoupper(substr($campo, 0, 1)) . substr($campo, 1);
             //Obtengo el nombre del metodo
@@ -101,7 +130,6 @@ class Clase_base extends \nucleo\BD {
 //                    $this->$metodoTabla($objeto);
 //                }
 //            }
-
 //            if (is_array($es_array) and !is_array($valor)) {
 //                $valor = unserialize($valor);
 //            }
@@ -143,7 +171,6 @@ class Clase_base extends \nucleo\BD {
 
 //    public function ejecutar() {
 //        $lista = parent::ejecutar();
-
 //        if (count($lista) == 1) {
 //            return $this->guardarDatosDeArray(array_pop($lista));
 //        } else {

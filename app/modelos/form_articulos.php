@@ -9,11 +9,11 @@ class form_articulos extends Formularios {
     public function configuracion() {
         $this->setCampos(array(
             "nombre" => array("type" => "text", "maxLength" => 20),
-            "categoria_id" => array("type" =>"seleccion", 
+            "categoria_id" => array(
+                "type" =>"seleccion", 
                 "label"=>"Elige categoria", 
                 "expandido"=>false,
                 "multiple"=>false,
-//                "opciones" => array("Fruta","Verdura","Legumbre")),
                 "opciones" => "categoria"),
             "Precio" => "text",
             "Cantidad" => "number",

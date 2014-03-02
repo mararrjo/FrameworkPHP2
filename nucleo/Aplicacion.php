@@ -8,6 +8,8 @@ class Aplicacion {
         
         $sesion = new \nucleo\Sesion();
         
+        
+        
         \nucleo\Distribuidor::mostrarVista();
     
         

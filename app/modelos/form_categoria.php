@@ -1,7 +1,7 @@
 <?php
 namespace app\modelos;
 
-class form_categorias extends \nucleo\Formularios {
+class form_categoria extends \nucleo\Formularios {
     
     public function configuracion() {
         

@@ -15,4 +15,7 @@ class Configuracion {
     public static $user = "root";
     public static $password = "";
     
+    public static $tiempoMaximoSesion = 15;
+    public static $tiempoInactividad = 5;
+    
 }
