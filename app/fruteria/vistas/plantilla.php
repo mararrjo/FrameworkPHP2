@@ -5,11 +5,11 @@
         <title>Fruteria</title>
         <link type="text/css" rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/vader/jquery-ui.css" />
         <?php echo \nucleo\Recursos::css("main"); ?>
-        <?php echo \nucleo\Recursos::css("fruteria", "listado"); ?>
+        <?php echo \nucleo\Recursos::css("articulos", "listado"); ?>
         <?php echo \nucleo\Recursos::js("jquery"); ?>
         <?php echo \nucleo\Recursos::js("jquery-ui"); ?>
         <?php echo \nucleo\Recursos::js("main"); ?>
-        <?php echo \nucleo\Recursos::js("fruteria", "main"); ?>
+        <?php echo \nucleo\Recursos::js("articulos", "main"); ?>
     </head>
     <body>
         <?php if(nucleo\Usuarios::estaValidado()): ?>

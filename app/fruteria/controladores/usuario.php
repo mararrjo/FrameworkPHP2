@@ -9,12 +9,12 @@ class usuario extends \nucleo\Controlador {
             \nucleo\Usuarios::iniciarSesion($usuario);
             \nucleo\Sesion::setFlash("Bienvenido Amo {$usuario->getUsuario()}!");
         }
-        \nucleo\URL::ir("fruteria/listado");
+        \nucleo\URL::ir("articulos/listado");
     }
     
     public function cerrarSesion(){
         \nucleo\Usuarios::cerrarSesion();
-        \nucleo\URL::ir("fruteria/listado");
+        \nucleo\URL::ir("articulos/listado");
     }
     
 //    public function tiempoInactividad(){
