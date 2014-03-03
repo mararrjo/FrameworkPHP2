@@ -1,6 +1,6 @@
 <?php
 
-namespace app\fruteria\modelos;
+namespace app\frontend\modelos;
 
 use nucleo\Formularios;
 

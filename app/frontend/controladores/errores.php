@@ -1,5 +1,5 @@
 <?php
-namespace app\fruteria\controladores;
+namespace app\frontend\controladores;
 
 class errores extends \nucleo\Controlador {
     

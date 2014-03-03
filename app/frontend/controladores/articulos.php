@@ -1,6 +1,6 @@
 <?php
 
-namespace app\fruteria\controladores;
+namespace app\frontend\controladores;
 
 use nucleo\Controlador;
 use app\fruteria\modelos\form_articulos;

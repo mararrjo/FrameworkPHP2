@@ -4,7 +4,7 @@ namespace app;
 class Configuracion extends \nucleo\Configuracion{
     
     public static $vista_plantilla = "plantilla";
-    public static $aplicacion = "fruteria";
+    public static $aplicacion = "frontend";
     public static $controlador_defecto = "articulos";
     public static $metodo_defecto = "listado";
     public static $forzadoBd = false;

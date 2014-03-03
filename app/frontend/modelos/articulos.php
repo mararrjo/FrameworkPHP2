@@ -1,5 +1,5 @@
 <?php
-namespace app\fruteria\modelos;
+namespace app\frontend\modelos;
 
 class articulos extends \nucleo\Clase_base {
     
