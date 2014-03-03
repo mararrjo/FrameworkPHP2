@@ -10,8 +10,6 @@ class articulos extends Controlador {
     public function listado() {
         $articulos = new \app\fruteria\modelos\articulos();
         $listaArticulos = $articulos->obtenerArticulos();
-        $requerimiento = new \nucleo\Requerimiento();
-//        var_dump($request);
         $this->renderizar(array("articulos" => $listaArticulos));
     }
 
@@ -53,7 +51,7 @@ class articulos extends Controlador {
         if ($formulario->esValido()) {
             $articulo->update();
             \nucleo\Sesion::setFlash("Se ha modificado el articulo " . $articulo->getNombre());
-            $this->redireccionar("fruteria", "listado");
+            $this->redireccionar("articulos", "listado");
         } else {
             $this->renderizarPlantilla("plantilla", "articulos", "modificar", array("form" => $formulario->renderizarFormulario()));
         }
@@ -66,8 +64,8 @@ class articulos extends Controlador {
     }
 
     public function eliminar_validar($request) {
-        if (isset($request["id"])) {
-            $id = $request["id"];
+        if ($request->post("id")) {
+            $id = $request->post("id");
             $articulo = new \app\fruteria\modelos\articulos();
              $articulo = $articulo->obtenerArticulo($id);
             $articulo->delete();

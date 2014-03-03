@@ -12,9 +12,6 @@ class Distribuidor {
 
         self::comprobarTiempoSesion();
         
-//        var_dump($_REQUEST);
-        
-        $aplicacion = "";
         $controlador = "";
         $metodo = "";
 
@@ -63,9 +60,9 @@ class Distribuidor {
             $id = $request->get("id");
             if ($request->get("id2")) {
                 $id2 = $request->get("id2");
-                $modulo->$metodo($_POST, $id, $id2);
+                $modulo->$metodo($request, $id, $id2);
             } else {
-                $modulo->$metodo($_POST, $id);
+                $modulo->$metodo($request, $id);
             }
         } else {
             $modulo->$metodo($request);

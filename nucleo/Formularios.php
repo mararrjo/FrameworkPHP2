@@ -86,15 +86,15 @@ class Formularios {
         return $this->datos;
     }
 
-    public function procesarFormulario(array $request, &$clase) {
+    public function procesarFormulario($request, &$clase) {
         $arrayDatos = array();
         foreach ($this->campos as $clave => $tipo) {
-            if (isset($request[$clave])) {
-                $arrayDatos[$clave] = $request[$clave];
+            if ($request->post($clave)) {
+                $arrayDatos[$clave] = $request->post($clave);
             }
         }
-        if (isset($request["id"])) {
-            $arrayDatos["id"] = $request["id"];
+        if ($request->post("id")) {
+            $arrayDatos["id"] = $request->post("id");
         }
         $this->datos = $arrayDatos;
 

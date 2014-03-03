@@ -32,7 +32,7 @@ class Usuarios {
         $usuarios = new usuario();
         $usuarios = $usuarios->select()->ejecutar();
         foreach ($usuarios as $usuario) {
-            if ($usuario->getUsuario() == $request["usuario"] and $usuario->getPassword() == md5($request["password"]) and $usuario->getActivo()) {
+            if ($usuario->getUsuario() == $request->post("usuario") and $usuario->getPassword() == md5($request->post("password")) and $usuario->getActivo()) {
                 return $usuario;
             }
         }

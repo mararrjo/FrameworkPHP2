@@ -4,11 +4,12 @@ namespace nucleo;
 
 class Controlador {
 
-    protected $form;
     protected $baseDatos;
+    private $response;
 
     public function __construct() {
-        $this->baseDatos = new \nucleo\BD();
+        $this->baseDatos = new BD();
+        $this->response = new Respuesta();
     }
 
     /**
@@ -20,15 +21,7 @@ class Controlador {
      * $listaArticulos.
      */
     public function renderizar(array $datos = array()) {
-        foreach ($datos as $variable => $valor) {
-            $$variable = $valor;
-        }
-        ob_start();
-        include "app/". \nucleo\Distribuidor::getAplicacion()."/vistas/" . \nucleo\Distribuidor::getControlador() . "/" . \nucleo\Distribuidor::getMetodo() . ".php";
-        $contenido = ob_get_clean();
-        ob_start();
-        include "app/". \app\Configuracion::$aplicacion."/vistas/" . \app\Configuracion::$vista_plantilla . ".php";
-        echo ob_get_clean();
+        $this->response->generar($datos);
     }
 
     /**
@@ -43,15 +36,7 @@ class Controlador {
      * $listaArticulos.
      */
     public function renderizarPlantilla($plantilla, $controlador, $metodo, array $datos = array()) {
-        foreach ($datos as $variable => $valor) {
-            $$variable = $valor;
-        }
-        ob_start();
-        include "app/". \nucleo\Distribuidor::getAplicacion()."/vistas/" . $controlador . "/" . $metodo . ".php";
-        $contenido = ob_get_clean();
-        ob_start();
-        include "app/". \nucleo\Distribuidor::getAplicacion()."/vistas/" . $plantilla . ".php";
-        echo ob_get_clean();
+        $this->response->generar($datos, $controlador, $metodo);
     }
 
     /**
@@ -65,9 +50,11 @@ class Controlador {
     public function redireccionar($controlador, $metodo, array $datos = array()) {
         if (isset($datos["id"])) {
             $id = $datos["id"];
-            $url = \nucleo\URL::ruta(array($controlador, $metodo, $id));
+//            $url = \nucleo\URL::ruta(array($controlador, $metodo, $id));
+            URL::ir("$controlador/$metodo/$id");
         } else {
-            $url = \nucleo\URL::ruta(array($controlador, $metodo));
+//            $url = \nucleo\URL::ruta(array($controlador, $metodo));
+            URL::ir("$controlador/$metodo");
         }
         echo "<script type='text/javascript'>location.assign('$url')</script>";
     }
