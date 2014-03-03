@@ -11,28 +11,32 @@ class Distribuidor {
     public static function mostrarVista() {
 
         self::comprobarTiempoSesion();
-
+        
+//        var_dump($_REQUEST);
+        
         $aplicacion = "";
         $controlador = "";
         $metodo = "";
 
         $aplicacion = \app\Configuracion::$aplicacion;
+        self::$aplicacion = $aplicacion;
+
+        $request = new Requerimiento();
         
-        if (!isset($_GET["controlador"])) {
+        if (!$request->get("controlador")) {
             $controlador = \app\Configuracion::$controlador_defecto;
         } else {
-            $controlador = $_GET["controlador"];
+            $controlador = $request->get("controlador");
         }
         self::$controlador = $controlador;
-
-
+        
         $controlador = "app\\$aplicacion\\controladores\\" . $controlador;
         if (is_file($controlador . ".php")) {
             $modulo = new $controlador();
-            if (!isset($_GET["metodo"])) {
+            if (!$request->get("metodo")) {
                 $metodo = \app\Configuracion::$metodo_defecto;
             } else {
-                $metodo = $_GET["metodo"];
+                $metodo = $request->get("metodo");
             }
 
             if (method_exists($modulo, $metodo)) {
@@ -55,16 +59,16 @@ class Distribuidor {
         }
 
 
-        if (isset($_GET["id"])) {
-            $id = $_GET["id"];
-            if (isset($_GET["id2"])) {
-                $id2 = $_GET["id2"];
+        if ($request->get("id")) {
+            $id = $request->get("id");
+            if ($request->get("id2")) {
+                $id2 = $request->get("id2");
                 $modulo->$metodo($_POST, $id, $id2);
             } else {
                 $modulo->$metodo($_POST, $id);
             }
         } else {
-            $modulo->$metodo($_POST);
+            $modulo->$metodo($request);
         }
     }
 

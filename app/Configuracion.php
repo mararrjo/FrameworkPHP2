@@ -4,9 +4,9 @@ namespace app;
 class Configuracion {
     
     public static $vista_plantilla = "plantilla";
-    public static $controlador_defecto = "fruteria";
-    public static $metodo_defecto = "listado";
     public static $aplicacion = "fruteria";
+    public static $controlador_defecto = "articulos";
+    public static $metodo_defecto = "listado";
     
     public static $forzadoBd = false;
     
@@ -16,7 +16,7 @@ class Configuracion {
     public static $user = "root";
     public static $password = "";
     
-    public static $tiempoMaximoSesion = 15;
+    public static $tiempoMaximoSesion = 30;
     public static $tiempoInactividad = 5;
     
 }

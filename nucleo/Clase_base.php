@@ -39,8 +39,9 @@ class Clase_base extends \nucleo\BD {
 
     public function obtenerStringColumnas() {
 
-        $clase = get_class($this);
-        $clase = str_getcsv($clase, "\\")[2];
+//        $clase = get_class($this);
+//        $clase = str_getcsv($clase, "\\")[2];
+        $clase = Utiles::obtenerTablaSinNamespace($this);
         $filas = $this->query("DESC $clase");
 //        $filas = $this->desc();
         $camposTabla = array();
@@ -68,8 +69,9 @@ class Clase_base extends \nucleo\BD {
 
     public function obtenerStringCampos() {
         //Extraigo las columnas que tiene la tabla en la base de datos
-        $clase = get_class($this);
-        $clase = str_getcsv($clase, "\\")[2];
+//        $clase = get_class($this);
+//        $clase = str_getcsv($clase, "\\")[2];
+        $clase = Utiles::obtenerTablaSinNamespace($this);
         $filas = $this->select("desc " . $clase);
         $camposTabla = array();
         foreach ($filas as $fila) {

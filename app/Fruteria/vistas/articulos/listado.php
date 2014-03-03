@@ -19,17 +19,17 @@
                     <td><?php echo $articulo->getCategoria(); ?></td>
                     <td><?php echo $articulo->getPrecio(); ?></td>
                     <td><?php echo $articulo->getCantidad(); ?></td>
-                    <td><a href="<?php echo nucleo\URL::ruta(array("fruteria", "mostrar", $articulo->getId())) ?>"><button class="boton">Ver</button></a>
+                    <td><a href="<?php echo nucleo\URL::ruta(array("articulos", "mostrar", $articulo->getId())) ?>"><button class="boton">Ver</button></a>
                         <?php if(nucleo\Usuarios::estaValidado()): ?>
-                        <a href="<?php echo nucleo\URL::ruta(array("fruteria", "modificar", $articulo->getId())) ?>"><button class="boton">Modificar</button></a>
-                        <a href="<?php echo nucleo\URL::ruta(array("fruteria", "eliminar", $articulo->getId())) ?>"><button class="boton">Eliminar</button></a>
+                        <a href="<?php echo nucleo\URL::ruta(array("articulos", "modificar", $articulo->getId())) ?>"><button class="boton">Modificar</button></a>
+                        <a href="<?php echo nucleo\URL::ruta(array("articulos", "eliminar", $articulo->getId())) ?>"><button class="boton">Eliminar</button></a>
                         <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
             <tr>
                 <td colspan="6">
-                    <a href="<?php echo nucleo\URL::ruta(array("fruteria", "anadir")); ?>"><button class="boton">Añadir</button></a>
+                    <a href="<?php echo nucleo\URL::ruta(array("articulos", "anadir")); ?>"><button class="boton">Añadir</button></a>
                 </td>
             </tr>
         </tbody>

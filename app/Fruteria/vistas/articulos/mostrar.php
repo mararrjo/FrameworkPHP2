@@ -6,4 +6,4 @@
     <li>Cantidad: <?php echo $articulo->getCantidad() ?></li>
 </ul>
 <br>
-<a href="<?php echo nucleo\URL::ruta(array("fruteria","listado")) ?>">Volver atras</a>
+<a href="<?php echo nucleo\URL::ruta(array()) ?>">Volver atras</a>

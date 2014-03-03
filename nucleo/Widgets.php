@@ -84,7 +84,7 @@ class Widgets {
     public static function seleccion($campo, $value = "", array $parametros = null) {
         if (!is_array($parametros["opciones"])) {
             $opciones = array();
-            $clase = "\\app\\modelos\\".$parametros["opciones"];
+            $clase = "\\app\\".Distribuidor::getAplicacion()."\\modelos\\".$parametros["opciones"];
             $objeto = new $clase();
             $objetos = $objeto->select()->ejecutar();
             foreach ($objetos as $objeto) {
