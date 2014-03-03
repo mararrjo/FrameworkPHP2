@@ -24,10 +24,10 @@ class Controlador {
             $$variable = $valor;
         }
         ob_start();
-        include "app/vistas/" . \nucleo\Distribuidor::getControlador() . "/" . \nucleo\Distribuidor::getMetodo() . ".php";
+        include "app/". \nucleo\Distribuidor::getAplicacion()."/vistas/" . \nucleo\Distribuidor::getControlador() . "/" . \nucleo\Distribuidor::getMetodo() . ".php";
         $contenido = ob_get_clean();
         ob_start();
-        include "app/vistas/" . \app\Configuracion::$vista_plantilla . ".php";
+        include "app/". \app\Configuracion::$aplicacion."/vistas/" . \app\Configuracion::$vista_plantilla . ".php";
         echo ob_get_clean();
     }
 
@@ -47,10 +47,10 @@ class Controlador {
             $$variable = $valor;
         }
         ob_start();
-        include "app/vistas/" . $controlador . "/" . $metodo . ".php";
+        include "app/". \nucleo\Distribuidor::getAplicacion()."/vistas/" . $controlador . "/" . $metodo . ".php";
         $contenido = ob_get_clean();
         ob_start();
-        include "app/vistas/" . $plantilla . ".php";
+        include "app/". \nucleo\Distribuidor::getAplicacion()."/vistas/" . $plantilla . ".php";
         echo ob_get_clean();
     }
 
@@ -81,7 +81,7 @@ class Controlador {
      */
     public function getBaseDatos($tabla = "") {
         if ($tabla) {
-            $clase = "\\app\\modelos\\$tabla";
+            $clase = "\\app\\". Distribuidor::getAplicacion()."\\modelos\\$tabla";
             if (class_exists($clase,false)) {
                 $obj = new $clase();
                 return $obj;

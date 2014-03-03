@@ -4,6 +4,7 @@ namespace nucleo;
 
 class Distribuidor {
 
+    private static $aplicacion;
     private static $controlador;
     private static $metodo;
 
@@ -11,9 +12,12 @@ class Distribuidor {
 
         self::comprobarTiempoSesion();
 
+        $aplicacion = "";
         $controlador = "";
         $metodo = "";
 
+        $aplicacion = \app\Configuracion::$aplicacion;
+        
         if (!isset($_GET["controlador"])) {
             $controlador = \app\Configuracion::$controlador_defecto;
         } else {
@@ -22,7 +26,7 @@ class Distribuidor {
         self::$controlador = $controlador;
 
 
-        $controlador = "app\\controladores\\" . $controlador;
+        $controlador = "app\\$aplicacion\\controladores\\" . $controlador;
         if (is_file($controlador . ".php")) {
             $modulo = new $controlador();
             if (!isset($_GET["metodo"])) {
@@ -34,7 +38,7 @@ class Distribuidor {
             if (method_exists($modulo, $metodo)) {
                 self::$metodo = $metodo;
             } else {
-                $controlador = "\\app\\controladores\\errores";
+                $controlador = "\\app\\$aplicacion\\controladores\\errores";
                 self::$controlador = "errores";
                 Sesion::setMensaje("error", "No existe el método");
                 $modulo = new $controlador();
@@ -42,7 +46,7 @@ class Distribuidor {
                 self::$metodo = $metodo;
             }
         } else {
-            $controlador = "\\app\\controladores\\errores";
+            $controlador = "\\app\\$aplicacion\\controladores\\errores";
             self::$controlador = "errores";
             Sesion::setMensaje("error", "No existe el controlador");
             $modulo = new $controlador();
@@ -64,6 +68,10 @@ class Distribuidor {
         }
     }
 
+    public static function getAplicacion(){
+        return self::$aplicacion;
+    }
+    
     public static function getControlador() {
         return self::$controlador;
     }

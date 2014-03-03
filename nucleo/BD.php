@@ -137,7 +137,7 @@ class BD implements InterfazBD {
     public function insert() {
         $this->tipo = "INSERT";
         $tabla = get_class($this);
-        $tabla = str_getcsv($tabla, "\\")[2];
+        $tabla = str_getcsv($tabla, "\\")[3];
         $this->from = Utiles::obtenerTablaSinNamespace($this);
         $this->set = $this->obtenerStringColumnas();
         return $this->ejecutar();
@@ -146,7 +146,7 @@ class BD implements InterfazBD {
     public function update() {
         $this->tipo = "UPDATE";
         $tabla = get_class($this);
-        $tabla = str_getcsv($tabla, "\\")[2];
+        $tabla = str_getcsv($tabla, "\\")[3];
         $this->from = Utiles::obtenerTablaSinNamespace($this);
         $this->set = $this->obtenerStringColumnas();
         $this->where = "id={$this->getId()}";

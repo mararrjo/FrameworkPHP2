@@ -1,5 +1,5 @@
 <?php
-namespace app\controladores;
+namespace app\fruteria\controladores;
 
 class usuario extends \nucleo\Controlador {
     

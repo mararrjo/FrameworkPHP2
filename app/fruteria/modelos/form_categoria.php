@@ -1,5 +1,5 @@
 <?php
-namespace app\modelos;
+namespace app\fruteria\modelos;
 
 class form_categoria extends \nucleo\Formularios {
     

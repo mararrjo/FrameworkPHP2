@@ -1,20 +1,20 @@
 <?php
 
-namespace app\controladores;
+namespace app\fruteria\controladores;
 
 use nucleo\Controlador;
-use app\modelos\form_articulos;
+use app\fruteria\modelos\form_articulos;
 
 class fruteria extends Controlador {
 
     public function listado() {
-        $articulos = new \app\modelos\articulos();
+        $articulos = new \app\fruteria\modelos\articulos();
         $listaArticulos = $articulos->obtenerArticulos();
         $this->renderizar(array("articulos" => $listaArticulos));
     }
 
     public function mostrar($request, $id = 0) {
-        $articulo = new \app\modelos\articulos();
+        $articulo = new \app\fruteria\modelos\articulos();
         $articulo = $articulo->obtenerArticulo($id);
         $this->renderizar(array("articulo" => $articulo));
     }
@@ -25,7 +25,7 @@ class fruteria extends Controlador {
     }
 
     public function anadir_validar($request) {
-        $articulo = new \app\modelos\articulos();
+        $articulo = new \app\fruteria\modelos\articulos();
         $formulario = new form_articulos($articulo);
         $formulario->procesarFormulario($request, $articulo);
         if ($formulario->esValido()) {
@@ -38,14 +38,14 @@ class fruteria extends Controlador {
     }
 
     public function modificar($request, $id = 0) {
-        $articulo = new \app\modelos\articulos();
+        $articulo = new \app\fruteria\modelos\articulos();
         $articulo = $articulo->obtenerArticulo($id);
         $form = new form_articulos($articulo);
         $this->renderizar(array("form" => $form->renderizarFormulario()));
     }
 
     public function modificar_validar($request) {
-        $articulo = new \app\modelos\articulos();
+        $articulo = new \app\fruteria\modelos\articulos();
         $formulario = new form_articulos($articulo);
         $formulario->procesarFormulario($request, $articulo);
         if ($formulario->esValido()) {
@@ -58,7 +58,7 @@ class fruteria extends Controlador {
     }
 
     public function eliminar($request, $id = 0) {
-        $articulo = new \app\modelos\articulos();
+        $articulo = new \app\fruteria\modelos\articulos();
         $articulo = $articulo->obtenerArticulo($id);
         $this->renderizar(array("articulo" => $articulo));
     }
@@ -66,7 +66,7 @@ class fruteria extends Controlador {
     public function eliminar_validar($request) {
         if (isset($request["id"])) {
             $id = $request["id"];
-            $articulo = new \app\modelos\articulos();
+            $articulo = new \app\fruteria\modelos\articulos();
              $articulo = $articulo->obtenerArticulo($id);
             $articulo->delete();
             \nucleo\Sesion::setFlash("Se ha eliminado el articulo " . $articulo->getNombre());

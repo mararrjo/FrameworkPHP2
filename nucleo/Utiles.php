@@ -17,7 +17,7 @@ namespace nucleo {
 
         public static function nuevoObjeto($tabla) {
 //            echo $tabla;
-            $tablaNamespace = "\\app\\modelos\\" . $tabla;
+            $tablaNamespace = "\\app\\". Distribuidor::getAplicacion()."\\modelos\\" . $tabla;
             if (class_exists($tablaNamespace, false)) {
                 return new $tablaNamespace();
             } else {

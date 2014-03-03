@@ -6,6 +6,7 @@ class Configuracion {
     public static $vista_plantilla = "plantilla";
     public static $controlador_defecto = "fruteria";
     public static $metodo_defecto = "listado";
+    public static $aplicacion = "fruteria";
     
     public static $forzadoBd = false;
     
