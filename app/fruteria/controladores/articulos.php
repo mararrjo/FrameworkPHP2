@@ -64,8 +64,8 @@ class articulos extends Controlador {
     }
 
     public function eliminar_validar($request) {
-        if (isset($request["id"])) {
-            $id = $request["id"];
+        if ($request->post("id")) {
+            $id = $request->post("id");
             $articulo = new \app\fruteria\modelos\articulos();
              $articulo = $articulo->obtenerArticulo($id);
             $articulo->delete();
