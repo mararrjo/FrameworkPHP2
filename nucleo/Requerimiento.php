@@ -111,11 +111,14 @@ class Requerimiento {
 //            $this->get("id",$this->get("id2"));
 //        }
 
-        if ($this->get("p1") == "frontend" || $this->get("p1") == "backend") {
+        if ($this->get("p1") == "frontend" || $this->get("p1") == "backend" || $this->get("p1")== "admin") {
 
             $url = "";
             if ($this->get("p1")) {
-                $this->get("aplicacion", $this->get("p1"));
+                if($this->get("p1")=="admin"){
+                    $this->get("aplicacion", "backend");
+                }else
+                    $this->get("aplicacion", $this->get("p1"));
             }
             if ($this->get("p2")) {
                 $this->get("controlador", $this->get("p2"));
