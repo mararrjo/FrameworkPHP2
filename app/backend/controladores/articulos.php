@@ -1,20 +1,20 @@
 <?php
 
-namespace app\frontend\controladores;
+namespace app\backend\controladores;
 
 use nucleo\Controlador;
-use app\frontend\modelos\form_articulos;
+use app\backend\modelos\form_articulos;
 
 class articulos extends Controlador {
 
     public function listado() {
-        $articulos = new \app\frontend\modelos\articulos();
+        $articulos = new \app\backend\modelos\articulos();
         $listaArticulos = $articulos->obtenerArticulos();
         $this->renderizar(array("articulos" => $listaArticulos));
     }
 
     public function mostrar($request, $id = 0) {
-        $articulo = new \app\frontend\modelos\articulos();
+        $articulo = new \app\backend\modelos\articulos();
         $articulo = $articulo->obtenerArticulo($id);
         $this->renderizar(array("articulo" => $articulo));
     }
@@ -25,7 +25,7 @@ class articulos extends Controlador {
     }
 
     public function anadir_validar($request) {
-        $articulo = new \app\frontend\modelos\articulos();
+        $articulo = new \app\backend\modelos\articulos();
         $formulario = new form_articulos($articulo);
         $formulario->procesarFormulario($request, $articulo);
         if ($formulario->esValido()) {
@@ -38,14 +38,14 @@ class articulos extends Controlador {
     }
 
     public function modificar($request, $id = 0) {
-        $articulo = new \app\frontend\modelos\articulos();
+        $articulo = new \app\backend\modelos\articulos();
         $articulo = $articulo->obtenerArticulo($id);
         $form = new form_articulos($articulo);
         $this->renderizar(array("form" => $form->renderizarFormulario()));
     }
 
     public function modificar_validar($request) {
-        $articulo = new \app\frontend\modelos\articulos();
+        $articulo = new \app\backend\modelos\articulos();
         $formulario = new form_articulos($articulo);
         $formulario->procesarFormulario($request, $articulo);
         if ($formulario->esValido()) {
@@ -58,7 +58,7 @@ class articulos extends Controlador {
     }
 
     public function eliminar($request, $id = 0) {
-        $articulo = new \app\frontend\modelos\articulos();
+        $articulo = new \app\backend\modelos\articulos();
         $articulo = $articulo->obtenerArticulo($id);
         $this->renderizar(array("articulo" => $articulo));
     }
@@ -66,7 +66,7 @@ class articulos extends Controlador {
     public function eliminar_validar($request) {
         if ($request->post("id")) {
             $id = $request->post("id");
-            $articulo = new \app\frontend\modelos\articulos();
+            $articulo = new \app\backend\modelos\articulos();
              $articulo = $articulo->obtenerArticulo($id);
             $articulo->delete();
             \nucleo\Sesion::setFlash("Se ha eliminado el articulo " . $articulo->getNombre());

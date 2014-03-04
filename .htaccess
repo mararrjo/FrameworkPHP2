@@ -6,14 +6,34 @@ RewriteOptions inherit
 #RewriteRule (.+)/?$ index.php [QSA,L,NS]
 
 RewriteCond %{REQUEST_URI} !(\.\w+)$
-RewriteRule (.+)/(.+)/(.+)/(.+)?$ index.php?aplicacion=$1controlador=$2&metodo=$3&id=$4&id2=$5 [QSA,L,NS]
+RewriteRule (.+)/(.+)/(.+)/(.+)/(.+)?$ index.php?p1=$1&p2=$2&p3=$3&p4=$4&p5=$5 [QSA,L,NS]
 RewriteCond %{REQUEST_URI} !(\.\w+)$
-RewriteRule (.+)/(.+)/(.+)/(.+)?$ index.php?aplicacion=$1&controlador=$2&metodo=$3&id=$4 [QSA,L,NS]
+RewriteRule (.+)/(.+)/(.+)/(.+)?$ index.php?p1=$1&p2=$2&p3=$3&p4=$4 [QSA,L,NS]
 RewriteCond %{REQUEST_URI} !(\.\w+)$
-RewriteRule (.+)/(.+)/(.+)?$ index.php?aplicacion=$1&controlador=$2&metodo=$3 [QSA,L,NS]
+RewriteRule (.+)/(.+)/(.+)?$ index.php?p1=$1&p2=$2&p3=$3 [QSA,L,NS]
 RewriteCond %{REQUEST_URI} !(\.\w+)$
-RewriteRule (.+)/(.+)?$ index.php?aplicacion=$1&controlador=$2 [QSA,L,NS]
+RewriteRule (.+)/(.+)?$ index.php?p1=$1&p2=$2 [QSA,L,NS]
 RewriteCond %{REQUEST_URI} !(\.\w+)$
-RewriteRule (.+)/?$ index.php?aplicacion=$1 [QSA,L,NS]
+RewriteRule (.+)/?$ index.php?p1=$1 [QSA,L,NS]
+RewriteCond %{REQUEST_URI} !(\.\w+)$
+
+#RewriteRule (.+)/(.+)/(.+)/(.+)?$ index.php?controlador=$1&metodo=$2&id=$3&id2=$4 [QSA,L,NS]
+#RewriteCond %{REQUEST_URI} !(\.\w+)$
+#RewriteRule (.+)/(.+)/(.+)?$ index.php?controlador=$1&metodo=$2&id=$3 [QSA,L,NS]
+#RewriteCond %{REQUEST_URI} !(\.\w+)$
+#RewriteRule (.+)/(.+)?$ index.php?controlador=$1&metodo=$2 [QSA,L,NS]
+#RewriteCond %{REQUEST_URI} !(\.\w+)$
+#RewriteRule (.+)/?$ index.php?controlador=$1 [QSA,L,NS]
+
+#RewriteCond %{REQUEST_URI} !(\.\w+)$
+#RewriteRule (.+)/(.+)/(.+)/(.+)?$ index.php?aplicacion=$1controlador=$2&metodo=$3&id=$4&id2=$5 [QSA,L,NS]
+#RewriteCond %{REQUEST_URI} !(\.\w+)$
+#RewriteRule (.+)/(.+)/(.+)/(.+)?$ index.php?aplicacion=$1&controlador=$2&metodo=$3&id=$4 [QSA,L,NS]
+#RewriteCond %{REQUEST_URI} !(\.\w+)$
+#RewriteRule (.+)/(.+)/(.+)?$ index.php?aplicacion=$1&controlador=$2&metodo=$3 [QSA,L,NS]
+#RewriteCond %{REQUEST_URI} !(\.\w+)$
+#RewriteRule (.+)/(.+)?$ index.php?aplicacion=$1&controlador=$2 [QSA,L,NS]
+#RewriteCond %{REQUEST_URI} !(\.\w+)$
+#RewriteRule (.+)/?$ index.php?aplicacion=$1 [QSA,L,NS]
 #RewriteCond %{REQUEST_URI} !(\.\w+)$
 #RewriteRule ^(\w)$ index.php?aplicacion=$1 [QSA,L,NS]

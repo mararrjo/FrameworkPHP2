@@ -1,5 +1,5 @@
 <?php
-namespace app\frontend\modelos;
+namespace app\backend\modelos;
 
 class articulos extends \nucleo\Clase_base {
     
@@ -16,7 +16,7 @@ class articulos extends \nucleo\Clase_base {
         $this->categoria_id = $categoria_id;
         $this->precio = $precio;
         $this->cantidad = $cantidad;
-        $this->categoria = new \app\frontend\modelos\categoria();
+        $this->categoria = new \app\backend\modelos\categoria();
     }
     
     public function getId() {

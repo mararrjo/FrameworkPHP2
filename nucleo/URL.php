@@ -7,10 +7,18 @@ class URL {
     public static function ruta(array $parametros = null) {
 
         if (!$parametros) {
-            $ruta = Distribuidor::getAplicacion();
+            if (Distribuidor::getAplicacion() != "frontend") {
+                $ruta = Distribuidor::getAplicacion();
+            } else {
+                $ruta = "";
+            }
             return URL . $ruta;
         } else {
-            $ruta = Distribuidor::getAplicacion() . "/";
+            if (Distribuidor::getAplicacion() != "frontend") {
+                $ruta = Distribuidor::getAplicacion() . "/";
+            } else {
+                $ruta = "";
+            }
         }
 
         foreach ($parametros as $index => $parametro) {

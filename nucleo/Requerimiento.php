@@ -12,7 +12,6 @@ class Requerimiento {
     public $request;
 
     public function __construct() {
-
         $this->get = $_GET;
         $this->post = $_POST;
         $this->request = $_REQUEST;
@@ -26,7 +25,12 @@ class Requerimiento {
      * $_GET[$param] si existe y "" si no existe. Si $param es un array,
      * devuelve un array con las coincidencias que se encuentren en $_GET.
      */
-    public function get($param) {
+    public function get($param, $valor = "") {
+        if ($valor) {
+            $this->get[$param] = $valor;
+            $_GET[$param] = $valor;
+            return $this->get;
+        }
         if (is_array($param)) {
             $parametros = array();
             foreach ($param as $p) {
@@ -94,6 +98,82 @@ class Requerimiento {
                 return "";
             }
         }
+    }
+
+    public function analizar_requerimiento() {
+
+//        if($this->get("controlador")=="frontend"){
+//            header("Location: ".URL.$this->get("metodo"));
+//        }else if($this->get("controlador")=="backend"){
+//            $this->get("aplicacion","backend");
+//            $this->get("controlador",$this->get("metodo"));
+//            $this->get("metodo",$this->get("id"));
+//            $this->get("id",$this->get("id2"));
+//        }
+
+        if ($this->get("p1") == "frontend" || $this->get("p1") == "backend") {
+
+            $url = "";
+            if ($this->get("p1")) {
+                $this->get("aplicacion", $this->get("p1"));
+            }
+            if ($this->get("p2")) {
+                $this->get("controlador", $this->get("p2"));
+                $url .= $this->get("controlador");
+            }
+            if ($this->get("p3")) {
+                $this->get("metodo", $this->get("p3"));
+                $url .= "/" . $this->get("metodo");
+            }
+            if ($this->get("p4")) {
+                $this->get("id", $this->get("p4"));
+                $url .= "/" . $this->get("id");
+            }
+            if ($this->get("p5")) {
+                $this->get("id2", $this->get("p5"));
+                $url .= "/" . $this->get("id2");
+            }
+
+            if ($this->get("aplicacion") == "frontend") {
+                header("Location: " . URL . $url);
+            }
+            
+        }else{
+
+            $this->get("aplicacion", "frontend");
+
+            if ($this->get("p1")) {
+                $this->get("controlador", $this->get("p1"));
+                $this->quitar_get("p1");
+            }
+            if ($this->get("p2")) {
+                $this->get("metodo", $this->get("p2"));
+                $this->quitar_get("p2");
+            }
+            if ($this->get("p3")) {
+                $this->get("id", $this->get("p3"));
+                $this->quitar_get("p3");
+            }
+            if ($this->get("p4")) {
+                $this->get("id2", $this->get("p4"));
+                $this->quitar_get("p4");
+            }
+        }
+    }
+    
+    public function quitar_get($param){
+        unset($this->get[$param]);
+        unset($_GET[$param]);
+    }
+    
+    public function quitar_post($param){
+        unset($this->post[$param]);
+        unset($_POST[$param]);
+    }
+    
+    public function quitar_request($param){
+        unset($this->request[$param]);
+        unset($_REQUEST[$param]);
     }
 
 }

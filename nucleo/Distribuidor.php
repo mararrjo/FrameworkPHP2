@@ -11,22 +11,28 @@ class Distribuidor {
     public static function mostrarVista() {
 
         self::comprobarTiempoSesion();
-        
+
+        $aplicacion = "";
         $controlador = "";
         $metodo = "";
 
-        $aplicacion = \app\Configuracion::$aplicacion;
+        $request = new Requerimiento();
+        $request->analizar_requerimiento();
+        
+        if (!$request->get("aplicacion")) {
+            $aplicacion = \app\Configuracion::$aplicacion;
+        } else {
+            $aplicacion = $request->get("aplicacion");
+        }
         self::$aplicacion = $aplicacion;
 
-        $request = new Requerimiento();
-        
         if (!$request->get("controlador")) {
             $controlador = \app\Configuracion::$controlador_defecto;
         } else {
             $controlador = $request->get("controlador");
         }
         self::$controlador = $controlador;
-        
+
         $controlador = "app\\$aplicacion\\controladores\\" . $controlador;
         if (is_file($controlador . ".php")) {
             $modulo = new $controlador();
@@ -54,6 +60,7 @@ class Distribuidor {
             $metodo = "index";
             self::$metodo = $metodo;
         }
+        
 
 
         if ($request->get("id")) {
@@ -69,10 +76,10 @@ class Distribuidor {
         }
     }
 
-    public static function getAplicacion(){
+    public static function getAplicacion() {
         return self::$aplicacion;
     }
-    
+
     public static function getControlador() {
         return self::$controlador;
     }
