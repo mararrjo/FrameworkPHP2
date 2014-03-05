@@ -15,7 +15,6 @@ RewriteCond %{REQUEST_URI} !(\.\w+)$
 RewriteRule (.+)/(.+)?$ index.php?p1=$1&p2=$2 [QSA,L,NS]
 RewriteCond %{REQUEST_URI} !(\.\w+)$
 RewriteRule (.+)/?$ index.php?p1=$1 [QSA,L,NS]
-RewriteCond %{REQUEST_URI} !(\.\w+)$
 
 #RewriteRule (.+)/(.+)/(.+)/(.+)?$ index.php?controlador=$1&metodo=$2&id=$3&id2=$4 [QSA,L,NS]
 #RewriteCond %{REQUEST_URI} !(\.\w+)$

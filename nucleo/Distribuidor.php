@@ -18,7 +18,7 @@ class Distribuidor {
 
         $request = new Requerimiento();
         $request->analizar_requerimiento();
-        
+
         if (!$request->get("aplicacion")) {
             $aplicacion = \app\Configuracion::$aplicacion;
         } else {
@@ -60,7 +60,7 @@ class Distribuidor {
             $metodo = "index";
             self::$metodo = $metodo;
         }
-        
+
 
 
         if ($request->get("id")) {
@@ -89,10 +89,12 @@ class Distribuidor {
     }
 
     public static function comprobarTiempoSesion() {
-        if (Usuarios::sesionCaducada()) {
-            Sesion::setFlash("Sesion caducada");
-        } else {
-            Sesion::setDatos("usuario_ultima_actividad", new \DateTime());
+        if (Usuarios::estaValidado()) {
+            if (Usuarios::sesionCaducada()) {
+                Sesion::setFlash("Sesion caducada");
+            } else {
+                Sesion::setDatos("usuario_ultima_actividad", new \DateTime());
+            }
         }
     }
 

@@ -102,15 +102,6 @@ class Requerimiento {
 
     public function analizar_requerimiento() {
 
-//        if($this->get("controlador")=="frontend"){
-//            header("Location: ".URL.$this->get("metodo"));
-//        }else if($this->get("controlador")=="backend"){
-//            $this->get("aplicacion","backend");
-//            $this->get("controlador",$this->get("metodo"));
-//            $this->get("metodo",$this->get("id"));
-//            $this->get("id",$this->get("id2"));
-//        }
-
         if ($this->get("p1") == "frontend" || $this->get("p1") == "backend" || $this->get("p1")== "admin") {
 
             $url = "";
